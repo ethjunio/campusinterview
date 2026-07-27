@@ -1,0 +1,185 @@
+"use client"
+import { FC, useEffect, useState } from 'react';
+import { useTranslations } from 'next-intl';
+import { fromISOtoDate, fromISOtoDateStatic } from '@/utils/date';
+import { Button } from '@/components/atoms/Button';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { Modal } from '@/components/organisms/modal/Modal';
+import styles from '@/app/candidate/(layoutwrapper)/pre-events/_components/PreEventDetail.module.scss'
+import c from 'classnames';
+import { BackLink } from '@/components/atoms/BackLink';
+import useScroll from '@/utils/scrollHook';
+import { useGetPreeventDetailDataQuery } from '@/hooks/company/preevents/useGetPreeventDetailDataQuery';
+export const PreeventCompanyDetailFeature: FC<{ id: string }> = ({ id }) => {
+  const t = useTranslations();
+
+const {data} = useGetPreeventDetailDataQuery(id);
+  const router = useRouter();
+
+  const [showText, setShowText] = useState(true);
+  const { scrollDirection } = useScroll();
+
+  function handleResize() {
+    const preEventDescriptionEl = document.getElementById(
+      'preEventDescription',
+    );
+
+    if (preEventDescriptionEl) {
+      const height = preEventDescriptionEl.offsetHeight;
+
+      document.getElementById('preEventBackground').style.height =
+        height + 'px';
+    }
+  }
+
+  useEffect(() => {
+    if (scrollDirection === 'up') {
+      setShowText(false);
+    } else if (scrollDirection === 'down') {
+      setShowText(true);
+      setTimeout(() => {
+        handleResize();
+      }, 10);
+    }
+  }, [scrollDirection]);
+
+  useEffect(() => {
+    // we have to wait for the preEventDescription to render and then get its height
+    // so that's why here is a hacky set timeout for 100 miliseconds
+    setTimeout(() => {
+      handleResize();
+    }, 100);
+  }, [data?.data.imageUrl]);
+
+//   window?.addEventListener('resize', handleResize);
+
+
+
+  return (
+    <>
+      <BackLink
+        className="relative sm:absolute top-0 left-0 mt-4 mb-4 sm:mb-0 ml-4 sm:ml-8 z-10"
+        href="/company/pre-event">
+        {/* {t('common.back')} */}
+        back to events
+      </BackLink>
+      {data?.data ? (
+        <div>
+          <div
+            className={c(
+              styles.imageCover,
+              'h-100 xl:h-132 flex justify-center items-center mt-20',
+            )}
+            // style={{ backgroundImage: `url(${data?.preevent.imageUrl})` }}
+          >
+           {
+            data?.data?.imageUrl ? <img
+            className={`${styles.preEventImage} w-full`}
+            src={`${data?.data.imageUrl}`}></img>:<img
+            className={`${styles.preEventImage} max-w-full`}
+            src="/img/FallBack.jpg"></img>
+           }
+          </div>
+
+          {showText ? (
+            <div>
+              <div
+                id="preEventBackground"
+                className={styles.preEventBackground}></div>
+              <div
+                id="preEventDescription"
+                className={c(
+                  styles.preEventDescription,
+                  'w-full sm:px-16 px-4 sm:py-10 py-5 space-y-4',
+                )}>
+                <div className="px-4 lg:px-16 py-4 lg:py-10 space-y-4">
+                  <div className="flex sm:items-center items-start justify-between flex-grow flex-col sm:flex-row ">
+                    <div>
+                      <span>{data?.data.company.name}</span>
+                      <h1 className="mb-2 lg:mb-8">{data?.data.title}</h1>
+                    </div>
+                    <Link href={`/company/pre-event/participant-list?id=${id}`}>
+                      <Button variant="primary-light">
+                        {t('companies.pre-event.button-list')}
+                      </Button>
+                    </Link>
+                  </div>
+
+                  <div className="pt-4 flex flex-col md:flex-row md:space-x-32 space-y-8 md:space-y-0">
+                    <p className="md:w-1/2 lead-text flex-auto whitespace-pre-line">
+                      {data?.data.description}
+                    </p>
+
+                    <div className="flex space-x-4 h-full bg-light-soft flex-shrink flex-grow-0 p-4 lg:p-8 rounded-md md:w-1/2 max-w-lg">
+                      <div className="text-dark">
+                        <table>
+                          <tbody>
+                            <tr>
+                              <td>{t('companies.pre-event.info-box.type')}</td>
+                              <td className="capitalize font-extrabold pl-8">
+                                {data?.data.type}
+                              </td>
+                            </tr>
+
+                            <tr>
+                              <td className="pt-4">
+                                {t('companies.pre-event.info-box.date-and-time')}
+                              </td>
+                              <td className="font-extrabold pl-8 pt-4">
+                                {fromISOtoDateStatic(data?.data?.eventDate)},{' '}
+                                {data?.data?.eventTime}
+                              </td>
+                            </tr>
+
+                            <tr>
+                              <td className="pt-4">
+                                {t('companies.pre-event.info-box.deadline')}
+                              </td>
+                              <td className="font-extrabold pl-8 pt-4">
+                                {fromISOtoDateStatic(
+                                  data?.data?.registrationDeadline,
+                                )}
+                              </td>
+                            </tr>
+
+                            <tr>
+                              <td className="pt-4">
+                                {t('companies.pre-event.info-box.location')}
+                              </td>
+                              <td className="font-extrabold pl-8 pt-4">
+                                {data?.data.address}
+                              </td>
+                            </tr>
+
+                            <tr>
+                              <td className="pt-4">
+                                {t('companies.pre-event.info-box.website')}
+                              </td>
+                              <td className="font-extrabold pl-8 pt-4">
+                                {data?.data.website}
+                              </td>
+                            </tr>
+
+                            <tr>
+                              <td className="pt-4">
+                                {t('companies.pre-event.info-box.number-of-participants')}
+                              </td>
+                              <td className="font-extrabold pl-8 pt-4">
+                                {data?.data.participants?.length}
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ) : null}
+        </div>
+      ) : null}
+    </>
+  );
+};

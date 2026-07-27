@@ -1,0 +1,20 @@
+[data-reach-tabs] {
+}
+
+[data-reach-tab-list] {
+  @apply bg-white flex items-baseline;
+}
+
+[data-reach-tab] {
+  @apply text-2xl text-dark-soft px-0 leading-relaxed;
+}
+
+[data-reach-tab][data-selected] {
+  @apply text-3xl text-primary-light border-0 leading-relaxed;
+}
+
+[data-reach-tab-panels] {
+}
+
+[data-reach-tab-panel] {
+}

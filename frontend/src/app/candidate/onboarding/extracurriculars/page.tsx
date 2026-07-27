@@ -1,0 +1,16 @@
+import Head from 'next/head'
+import React from 'react'
+import ExtracurricularsFeature from './_components/ExtracurricularsFeature'
+
+const page = () => {
+  return (
+    <main className="w-full">
+    <Head>
+      <title>Extracurriculars</title>
+    </Head>
+    <ExtracurricularsFeature routePath={"/candidate/onboarding/technical-skills"} />
+  </main>
+  )
+}
+
+export default page

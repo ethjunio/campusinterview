@@ -1,0 +1,39 @@
+.link {
+    @apply flex py-3 duration-200 w-full items-center justify-start;
+  }
+  
+  .link-text {
+    @apply text-white text-lg ml-0 font-semibold leading-snug transition-all duration-200;
+    white-space: nowrap;
+    opacity: 0;
+    width: 0;
+    pointer-events: none;
+  }
+  
+  @media (max-width: 1024px) {
+    .link-text {
+      width: auto;
+      opacity: 1;
+      margin-left: 5px;
+      @apply text-white ml-4;
+    }
+  }
+  
+  .nav {
+  }
+  
+  .nav:hover .link-text {
+    @apply text-white ml-4;
+    pointer-events: default;
+    opacity: 1;
+    transition: all;
+    transition-duration: 100ms;
+    display: block;
+    width: auto;
+  }
+  
+  .icon {
+    @apply w-5 h-6 text-white fill-current;
+    min-width: theme('width.5');
+  }
+  

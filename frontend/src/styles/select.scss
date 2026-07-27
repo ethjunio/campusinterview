@@ -1,0 +1,175 @@
+.react-select-container {
+  @apply text-dark text-base leading-tight font-semibold;
+  .react-select__control {
+    @apply rounded border-dark-soft shadow-none;
+
+    &:hover {
+      @apply border-dark;
+    }
+
+    &:active {
+      @apply border-primary-light;
+    }
+
+    &:focus-within {
+      @apply border-primary-light;
+    }
+
+    .react-select__value-container {
+      @apply px-3 pb-2 pt-1;
+
+      .react-select__placeholder {
+        @apply text-dark-soft;
+      }
+
+      .react-select__single-value {
+        @apply text-dark;
+      }
+
+      .react-select__multi-value {
+        @apply px-2 py-1 rounded-full text-primary-light bg-light;
+
+        .react-select__multi-value__label {
+          @apply text-primary-light font-bold text-base leading-tight;
+        }
+
+        .react-select__multi-value__remove {
+          @apply rounded-full ml-1 px-2;
+          &:hover {
+            @apply bg-primary-softer text-primary-dark;
+          }
+        }
+      }
+    }
+
+    .react-select__indicators {
+      .react-select__indicator-separator {
+        @apply bg-dark-soft;
+      }
+
+      .react-select__dropdown-indicator {
+        @apply text-dark-softer;
+      }
+    }
+  }
+
+  .react-select__menu {
+    @apply z-40;
+
+    .react-select__menu-list {
+      @apply text-dark;
+
+      .react-select__option--is-focused {
+        @apply bg-light-soft text-dark;
+      }
+
+      .react-select__option--is-selected {
+        @apply bg-light text-dark;
+      }
+    }
+  }
+}
+
+.react-select-container-error {
+  .react-select__control {
+    @apply rounded border-danger text-danger;
+
+    .react-select__value-container {
+      .react-select__single-value {
+        @apply text-danger;
+      }
+    }
+
+    .react-select__indicators {
+      .react-select__indicator-separator {
+        @apply bg-danger;
+      }
+
+      .react-select__dropdown-indicator {
+        @apply text-danger;
+      }
+    }
+  }
+}
+
+.datepicker {
+  .rdp-root {
+    .rdp-dropdowns {
+      .rdp-dropdown_root {
+        &:focus-visible {
+          outline: none !important;
+          border: 0px !important;
+        }
+
+        .rdp-dropdown {
+          padding: 10px;
+          width: 150px;
+          &:focus-visible {
+            outline: none;
+          }
+        }
+      }
+    }
+  }
+}
+
+.datebox {
+  & > div {
+    width: 100%;
+  }
+}
+//new css
+.jobTypeId-select label {
+  width: 100%;
+  max-width: 100%;
+}
+
+.endDate-bax .datepicker {
+  left: -135px;
+}
+.evnetday-edit .general-text {
+    font-size: 14px !important;
+    margin-bottom: 5px;
+}
+.evnetday-edit label{
+  margin-bottom:0px;
+}
+.evnetday-edit .relative input{
+    margin-bottom: 16px;
+}
+.evnetday-edit .general-text-sm{
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+.mb_0 label{
+  margin-bottom: 0px;
+}
+.event-daylabel{
+  margin-bottom: 5px !important;
+  font-size: 14px !important;
+}
+.event-overviewcard .per-eventcard {
+  min-width: 235px !important;
+  width: 100%;
+}
+.swiper-button-prev-custom, .swiper-button-next-custom {
+  width: 35px !important;
+  height: 35px !important;
+  border-radius: 100px;
+  border: 2px solid;
+}
+.past-events .swiper-button-prev{
+  display: none;
+}
+.past-events .swiper-button-next{
+  display: none;
+}
+.past-events .swiper-button-prev{
+  display: none;
+}
+button.swiper-button-prev-custom , button.swiper-button-next-custom {
+  background-color: transparent;
+  border: 0px;
+  box-shadow: none;
+  padding: 0px;
+}

@@ -1,0 +1,30 @@
+.tag-sectable {
+    cursor: default;
+    @apply inline-block px-4 py-2 rounded-full font-bold text-base leading-tight text-primary-light bg-light;
+  }
+  
+  .tag {
+    cursor: default;
+    @apply inline-block px-4 py-2 rounded-full font-bold text-base leading-tight text-primary-light bg-light;
+  }
+  
+  .tag-selectable:active {
+    @apply bg-gradient-105-primary-light text-white;
+  }
+  
+  .tag-selectable:hover {
+    @apply bg-gradient-105-h-primary-soft text-primary-dark;
+  }
+  
+  .active {
+    @apply bg-gradient-105-primary-light text-white;
+  }
+  
+  .active:active {
+    @apply bg-gradient-105-primary-light text-white;
+  }
+  
+  .active:hover {
+    @apply bg-gradient-105-h-primary-light text-white;
+  }
+  

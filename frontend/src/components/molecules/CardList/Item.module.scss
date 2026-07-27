@@ -1,0 +1,11 @@
+.base {
+  @apply flex justify-between items-center px-5 py-3 rounded shadow-sm border border-light bg-light-softer;
+}
+
+.icon {
+  @apply mr-8 w-12 h-12;
+}
+
+.info {
+  @apply px-4;
+}

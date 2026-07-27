@@ -1,0 +1,41 @@
+.bg-svg-landing {
+  background: url('/img/illustrations/illustration_start.svg') no-repeat right
+    top;
+  background-size: contain;
+  z-index: -1;
+}
+
+.bg-svg-landing-what {
+  background: url('/img/illustrations/illustration_what.svg') no-repeat left top;
+  background-size: contain;
+  z-index: -1;
+  height: 37.5rem;
+  // illustration_what.svg
+}
+
+.bg-svg-landing-who {
+  background: url('/img/illustrations/illustration_who.svg') no-repeat bottom
+    right;
+  background-size: cover;
+  z-index: -1;
+  height: 925px;
+  @apply absolute left-0 right-0 bottom-0 -ml-16;
+}
+
+.bg-svg-looking-for-job {
+  background: url('/img/illustrations/illustration_looking_for_a_job.svg')
+    no-repeat top left;
+  background-size: contain;
+  z-index: -1;
+  height: 919px;
+  width: 850px;
+}
+
+.bg-svg-looking-for-job-bg {
+  background: url('/img/illustrations/illustration_background_students.svg')
+    no-repeat left top;
+  background-size: 900px 100vw;
+  z-index: -1;
+  width: 100vw;
+  height: 1000px;
+}

@@ -1,0 +1,135 @@
+ol.connected-list {
+    counter-reset: list-counter;
+  
+    li {
+      counter-increment: list-counter;
+      &:not(:first-child) {
+        @apply mt-8;
+      }
+      @apply relative leading-normal;
+      &::before {
+        @apply w-6 h-6 absolute rounded-full bg-gradient-135-primary-light text-white text-center my-auto py-0 text-base;
+        content: counter(list-counter);
+      }
+  
+      &::after {
+        content: '';
+        top: 0.6rem;
+        left: 0.75rem;
+        height: calc(100% + 0.5rem);
+        @apply absolute border-l border-primary-light mt-3;
+      }
+    }
+  }
+  
+  .left {
+    @apply w-4/12;
+  
+    table {
+      width: 100%;
+      tbody {
+        tr {
+          td {
+            @apply pt-4;
+          }
+          td:first-child {
+            @apply text-left text-dark text-base leading-tight font-semibold;
+          }
+          td:last-child {
+            @apply pl-6 text-left text-dark text-base leading-tight font-extrabold;
+          }
+        }
+        tr:first-child {
+          td {
+            @apply pt-0;
+          }
+        }
+      }
+    }
+  }
+  
+  @media only screen and (max-width: 1200px) {
+    .left {
+      @apply w-1/2;
+    }
+  }
+  
+  @media only screen and (max-width: 1024px) {
+    .left {
+      @apply w-full;
+    }
+  }
+  
+  .middle {
+    @apply w-1/12;
+  }
+  
+  .right {
+    @apply w-7/12;
+    table {
+      width: 100%;
+      tbody {
+        tr {
+          td {
+            @apply pt-4;
+          }
+          td:first-child {
+            @apply w-32 text-left text-dark text-base leading-tight font-semibold;
+          }
+          td:last-child {
+            @apply pl-16 text-left text-dark text-base leading-tight font-semibold;
+          }
+        }
+        tr:first-child {
+          td {
+            @apply pt-0;
+          }
+        }
+      }
+    }
+  }
+  
+  .full {
+    @apply w-full;
+  
+    table {
+      width: 100%;
+      tbody {
+        tr {
+          td {
+            @apply pt-4;
+          }
+          td:first-child {
+            @apply w-32 text-left text-dark text-base leading-tight font-semibold;
+          }
+          td:last-child {
+            @apply pl-6 text-right text-left text-dark text-base leading-tight font-extrabold;
+          }
+        }
+        tr:first-child {
+          td {
+            @apply pt-0;
+          }
+        }
+      }
+    }
+  }
+  
+  .grid4On1First {
+    display: grid;
+    grid-template-columns: 150px 200px;
+    min-width: 40%;
+  }
+  
+  .grid4On1Second {
+    display: grid;
+    grid-template-columns: 120px auto;
+    width: auto;
+  }
+  
+  // @media (max-width: 1200px) {
+  //   .grid4On1First {
+  //     min-width: 500px;
+  //   }
+  // }
+  

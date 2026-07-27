@@ -1,0 +1,30 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* --background: #0a0a0a; */
+    --foreground: #0a0a0a;
+    font-family: Proxima Nova;
+  }
+}
+
+body {
+  color: var(--foreground);
+  /* background: var(--background); */
+  font-family: Proxima Nova, Arial, Helvetica, sans-serif;
+}
+.evnetday-edit .form-input, .evnetday-edit .form-textarea, .evnetday-edit .form-select, .evnetday-edit .form-multiselect{
+   font-size: 14px !important;
+}
+
+.content img{
+  width: 100px !important;
+  max-width: 100px !important;
+}

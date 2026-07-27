@@ -1,0 +1,98 @@
+.markdown {
+  @apply text-dark;
+  .content {
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply mb-4;
+  }
+  p {
+    @apply my-1 text-dark text-lg leading-relaxed font-semibold;
+    @screen 2lg {
+      @apply my-4;
+    }
+  }
+  blockquote {
+    @apply border-primary-dark border-l-2 pl-4;
+    p {
+      @apply m-0;
+    }
+  }
+  table {
+    tbody {
+      tr {
+        td {
+          @apply pt-3;
+
+          @screen 2lg {
+            @apply pt-5;
+          }
+        }
+        td:not(:first-child) {
+          @apply pl-8;
+        }
+      }
+      tr:first-child {
+        td {
+          @apply pt-0;
+        }
+      }
+    }
+  }
+}
+
+.subprocessors {
+  @apply text-dark p-16 font-sans max-w-screen-md;
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply mb-4 mt-4;
+    font-weight: bold;
+  }
+
+  p {
+    @apply text-base leading-snug text-dark py-4;
+  }
+
+  table {
+    @apply mt-4 p-6;
+    border-collapse: collapse;
+
+    th {
+      @apply p-2;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    td {
+      @apply p-6;
+    }
+
+    td,
+    th {
+      border: 1px solid #e2e8f0;
+    }
+
+    tr:first-child th {
+      border-top: 0;
+    }
+
+    tr:last-child td {
+      border-bottom: 0;
+    }
+
+    tr td:first-child,
+    tr th:first-child {
+      border-left: 0;
+    }
+
+    tr td:last-child,
+    tr th:last-child {
+      border-right: 0;
+    }
+  }
+}

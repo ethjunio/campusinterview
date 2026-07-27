@@ -1,0 +1,20 @@
+# dependencies
+/node_modules
+package-lock.json
+
+# next.js
+/.next/
+/out/
+
+# production
+/build
+
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+.vscode/settings.json
+.vscode/launch.json
+.env
+.env.local
+

@@ -1,0 +1,25 @@
+.body {
+    table {
+      @apply w-full mt-10;
+  
+      tbody {
+        tr {
+          td {
+            @apply pt-4;
+          }
+          td:first-child {
+            @apply w-5/12 text-left text-dark text-base leading-tight font-semibold;
+          }
+          td:last-child {
+            @apply pl-3 text-left text-dark text-base leading-tight font-semibold;
+          }
+        }
+        tr:first-child {
+          td {
+            @apply pt-0;
+          }
+        }
+      }
+    }
+  }
+  
