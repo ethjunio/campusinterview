@@ -20,6 +20,8 @@ export class Candidate {
   })
   userId!: Types.ObjectId;
 
+  @Prop() onboardingState!: string;
+
   // Personal Data
   @Prop({ type: PersonalDataSchema }) personal?: PersonalData;
 
@@ -44,14 +46,14 @@ export class Candidate {
 
 export const CandidateSchema = SchemaFactory.createForClass(Candidate);
 
-export type CandidateDocumentOverride = {
-  personal: Types.Subdocument<Types.ObjectId> & PersonalData;
-  education: Types.Subdocument<Types.ObjectId> & EducationDetails;
-  experiences: Types.DocumentArray<ExperiencePosition>;
-  extracurriculars: Types.DocumentArray<ExtracurricularPosition>;
-  skills: Types.DocumentArray<SkillPosition>;
-  languages: Types.DocumentArray<LanguagePosition>;
-  jobRequirements: Types.Subdocument<Types.ObjectId> & JobRequirements;
-};
+// export type CandidateDocumentOverride = {
+//   personal?: Types.Subdocument<Types.ObjectId> & PersonalData;
+//   education?: Types.Subdocument<Types.ObjectId> & EducationDetails;
+//   experiences?: Types.DocumentArray<ExperiencePosition>;
+//   extracurriculars?: Types.DocumentArray<ExtracurricularPosition>;
+//   skills?: Types.DocumentArray<SkillPosition>;
+//   languages?: Types.DocumentArray<LanguagePosition>;
+//   jobRequirements?: Types.Subdocument<Types.ObjectId> & JobRequirements;
+// };
 
-export type CandidateDocument = HydratedDocument<Candidate, CandidateDocumentOverride>;
+export type CandidateDocument = HydratedDocument<Candidate>;

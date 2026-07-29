@@ -1,27 +1,26 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import { useTranslations } from "next-intl";
-import { Form, Formik } from "formik";
-import * as yup from "yup";
-import { InputField } from "@/components/molecules/form/InputField";
-import { ImageUploader } from "@/components/molecules/form/ImageUploader";
+import { DatePickerField } from "@/app/candidate/(layoutwrapper)/profile/(layoutforms)/extracurriculars/_components/DatePickerField";
 import { Button } from "@/components/atoms/Button";
-import { usePersonalFormCreateMutation } from "@/hooks/student/onboardingmgmt/usePersonalFormCreateMutation";
-import Select from "react-select";
-import { usePathname, useRouter } from "next/navigation";
+import { ImageUploader } from "@/components/molecules/form/ImageUploader";
+import { InputField } from "@/components/molecules/form/InputField";
+import { useGetPersonalDataQuery } from "@/hooks/student/onboardingmgmt/useGetPersonalDataQuery";
 import {
   useGetNationalityDropdownQuery,
   useGetResidentialDropdownQuery,
 } from "@/hooks/student/onboardingmgmt/useGetPersonalFormHooks";
-import { useGetPersonalDataQuery } from "@/hooks/student/onboardingmgmt/useGetPersonalDataQuery";
-import { toast } from "sonner";
-import { DatePickerField } from "@/app/candidate/(layoutwrapper)/profile/(layoutforms)/extracurriculars/_components/DatePickerField";
+import { usePersonalFormCreateMutation } from "@/hooks/student/onboardingmgmt/usePersonalFormCreateMutation";
 import { fromISOtoDate } from "@/utils/date";
 import { useQueryClient } from "@tanstack/react-query";
+import { Form, Formik } from "formik";
 import isEqual from "lodash.isequal";
-import PhoneInput, { getCountryCallingCode } from "react-phone-number-input";
-import { parsePhoneNumber } from "react-phone-number-input";
+import { useTranslations } from "next-intl";
+import { usePathname, useRouter } from "next/navigation";
+import React, { useEffect, useState } from "react";
+import PhoneInput, { getCountryCallingCode, parsePhoneNumber } from "react-phone-number-input";
 import "react-phone-number-input/style.css";
+import Select from "react-select";
+import { toast } from "sonner";
+import * as yup from "yup";
 
 export const PersonalForm = (button: any) => {
   const queryClient = useQueryClient();
@@ -109,46 +108,6 @@ export const PersonalForm = (button: any) => {
         (value) => !!value?.trim()
       )
       .max(50, t("common.form-field-error-max", { max: 50 })),
-      email: yup
-  .string()
-  .required(t("common.form-field-required"))
-  .transform((value) => value?.trim())
-  .test(
-    "not-only-spaces",
-    "Email cannot be only spaces",
-    (value) => {
-      if (!value) return false;
-      return value.trim().length > 0;
-    }
-  )
-  .email(t("common.form-field-email-invalid"))
-  .max(254, t("common.form-field-error-max", { max: 254 }))
-  .test(
-    "no-spaces",
-    t("common.form-field-email-invalid"),
-    (value) => {
-      if (!value) return true; // let required handle empty
-      return !value.includes(" ");
-    }
-  )
-  .test(
-    "local-part-length",
-    t("common.form-field-email-invalid"),
-    (value) => {
-      if (!value) return true;
-      const [local] = value.split("@");
-      return local.length <= 64;
-    }
-  )
-  .test(
-    "valid-domain",
-    t("common.form-field-email-invalid"),
-    (value) => {
-      if (!value) return true;
-      const parts = value.split("@");
-      return !!(parts[1] && parts[1].includes("."));
-    }
-  ),
     phoneNumber: yup
       .string()
       .matches(phoneRegExp, t("common.form-field-phone-invalid"))
@@ -181,15 +140,15 @@ export const PersonalForm = (button: any) => {
     nationalityId: yup
       .number()
       .required(t("common.form-field-required"))
-      .min(1, "Required"), // ensures 0 is valid,
-      residencePermitId: yup
+      .min(0, "Required"), // ensures 0 is valid,
+    residencePermitId: yup
       .number()
       .required(t("common.form-field-required"))
-      .min(1, "Required"), // ensures 0 is valid
+      .min(0, "Required"), // ensures 0 is valid
     countryCode: yup
       .number()
       .required(t("common.form-field-required-countrycode"))
-      .min(1, "Country code Required"), // ensures 0 is valid
+      .min(0, "Country code Required"), // ensures 0 is valid
   });
 
   const salutationOptions = [
@@ -217,9 +176,9 @@ export const PersonalForm = (button: any) => {
       image: personalData?.data?.imageUrlSmall || "",
       salutation: personalData?.data?.salutation
         ? {
-            label: personalData.data.salutation,
-            value: personalData.data.salutation,
-          }
+          label: personalData.data.salutation,
+          value: personalData.data.salutation,
+        }
         : null,
       firstName: personalData?.data?.firstName || "",
       lastName: personalData?.data?.lastName || "",
@@ -231,8 +190,6 @@ export const PersonalForm = (button: any) => {
       residencePermitId: personalData?.data?.residencePermitId || 0,
       experienceYears: personalData?.data?.experienceYears || 0,
       countryCode: personalData?.data?.countryCode || 41,
-      email: personalData?.data?.user?.email || "",
-
     };
   }, [personalData]);
 
@@ -249,20 +206,18 @@ export const PersonalForm = (button: any) => {
     residencePermitId: values.residencePermitId || 0,
     experienceYears: values.experienceYears || 0,
     countryCode: values.countryCode || "41",
-    email: values?.email || "",
-
   });
   let formikValues: any = null;
   const formatSwissNumber = (nationalNumber?: string) => {
     if (!nationalNumber) return "";
-  
+
     const digits = nationalNumber.replace(/\D/g, "").slice(0, 9); // CH = 9 digits
-  
+
     const part1 = digits.slice(0, 2);
     const part2 = digits.slice(2, 5);
     const part3 = digits.slice(5, 7);
     const part4 = digits.slice(7, 9);
-  
+
     return [part1, part2, part3, part4].filter(Boolean).join(" ");
   };
 
@@ -276,7 +231,7 @@ export const PersonalForm = (button: any) => {
 
   function convertIsoToYMD(dateString: string): Date {
     const date = new Date(dateString);
-  
+
     return new Date(
       date.getUTCFullYear(),
       date.getUTCMonth(),
@@ -453,22 +408,15 @@ export const PersonalForm = (button: any) => {
                 placeholder={t("candidate.personal.form-lastName-placeholder")}
                 maxLength={50}
               />
-              <InputField
-                required
-                name="email"
-                label={t("auth.form-email-label")}
-                placeholder={t("auth.form-email-placeholder")}
-                maxLength={50}
-              />
               <div className="mb-4 max-w-full xl:max-w-md">
                 <span>{t("candidate.personal.form-phoneNumber-label")}</span>
 
                 <div className="mt-2">
                   <PhoneInput
-                      international
-                      defaultCountry="CH"
-                      countryCallingCodeEditable={true}
-                    
+                    international
+                    defaultCountry="CH"
+                    countryCallingCodeEditable={true}
+
                     placeholder={t(
                       "candidate.personal.form-phoneNumber-placeholder"
                     )}
@@ -476,8 +424,8 @@ export const PersonalForm = (button: any) => {
                       values.countryCode && values.phoneNumber
                         ? `+${values.countryCode}${(values.phoneNumber)}`
                         : values.countryCode
-                        ? `+${values.countryCode}`
-                        : ""
+                          ? `+${values.countryCode}`
+                          : ""
                     }
                     onCountryChange={(country) => {
                       if (country) {
@@ -485,7 +433,7 @@ export const PersonalForm = (button: any) => {
                         setFieldValue("countryCode", callingCode);
                       }
                     }}
-                
+
                     // ✅ Fires when user types
                     onChange={(value) => {
                       if (!value) {
@@ -493,9 +441,9 @@ export const PersonalForm = (button: any) => {
                         setFieldValue("phoneNumber", "");
                         return;
                       }
-                
+
                       const parsed = parsePhoneNumber(value);
-                
+
                       // Only update phoneNumber when valid
                       if (parsed?.nationalNumber) {
                         setFieldValue("phoneNumber", parsed.nationalNumber);
@@ -503,18 +451,18 @@ export const PersonalForm = (button: any) => {
                     }}
                   />
                 </div>
-<div className="flex gap-4">
-                {touched?.countryCode && errors?.countryCode && typeof errors?.countryCode === "string" && (
-    <div className="text-red text-sm mt-1">
-      {errors.countryCode}
-    </div>
-  )}
-  {touched?.phoneNumber && errors?.phoneNumber && typeof errors?.phoneNumber === "string" && (
-    <div className="text-red text-sm mt-1">
-      {errors.phoneNumber}
-    </div>
-  )}
-  </div>
+                <div className="flex gap-4">
+                  {touched?.countryCode && errors?.countryCode && typeof errors?.countryCode === "string" && (
+                    <div className="text-red text-sm mt-1">
+                      {errors.countryCode}
+                    </div>
+                  )}
+                  {touched?.phoneNumber && errors?.phoneNumber && typeof errors?.phoneNumber === "string" && (
+                    <div className="text-red text-sm mt-1">
+                      {errors.phoneNumber}
+                    </div>
+                  )}
+                </div>
               </div>
 
               <div className="datebox mb-8 max-w-full xl:max-w-md">
@@ -623,13 +571,12 @@ export const PersonalForm = (button: any) => {
                   }}
                   value={
                     values.experienceYears !== null &&
-                    values.experienceYears !== undefined
+                      values.experienceYears !== undefined
                       ? {
-                          value: values.experienceYears,
-                          label: `${values.experienceYears} ${
-                            values.experienceYears === 1 ? "year" : "years"
+                        value: values.experienceYears,
+                        label: `${values.experienceYears} ${values.experienceYears === 1 ? "year" : "years"
                           }`,
-                        }
+                      }
                       : null
                   }
                 />

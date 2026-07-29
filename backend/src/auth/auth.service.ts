@@ -5,7 +5,9 @@ import * as bcrypt from 'bcrypt';
 import { randomBytes } from 'crypto';
 import { Model } from 'mongoose';
 
+import { CandidatesService } from '@/candidates/candidates.service';
 import { PublicUser, User, UserType } from '@/users/schemas/user.schema';
+import { UsersService } from '@/users/users.service';
 import { SignInResponseDto } from './dtos/sign-in.dto';
 
 export enum AuthError {
@@ -20,7 +22,9 @@ export class AuthService {
   public constructor(
     @InjectModel(User.name)
     private readonly userModel: Model<User>,
-    private jwtService: JwtService
+    private jwtService: JwtService,
+    private userService: UsersService,
+    private candidateService: CandidatesService,
   ) { }
 
   public async validateUser(email: string, password: string): Promise<PublicUser> {
@@ -48,15 +52,20 @@ export class AuthService {
     );
   }
 
-  public signIn(user: any): SignInResponseDto {
-    const accessToken = this.jwtService.sign({
-      email: user.email
-    });
+  public async signIn(publicUser: PublicUser): Promise<SignInResponseDto> {
+    const email = publicUser.email;
+    const user = await this.userService.findByEmail(email);
+    const accessToken = this.jwtService.sign({ email });
+
+    let candidateOnboardingState: string | undefined = undefined;
+    if (user.type === UserType.Candidate)
+      candidateOnboardingState = await this.candidateService.updateOnboardingState(email);
 
     return {
       user: {
-        email: user.email,
+        email,
         type: user.type,
+        candidateOnboardingState,
       },
       accessToken
     };

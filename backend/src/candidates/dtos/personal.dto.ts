@@ -56,7 +56,4 @@ export class PersonalDataDto {
   @Type(() => Number)
   @IsInt()
   experienceYears!: number;
-
-  @Expose()
-  email?: string;
 }

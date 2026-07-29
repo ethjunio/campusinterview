@@ -12,6 +12,7 @@ import { Candidate, CandidateSchema } from './schemas/candidate.schema';
     UsersModule,
   ],
   controllers: [CandidatesController],
-  providers: [CandidatesService]
+  providers: [CandidatesService],
+  exports: [CandidatesService],
 })
 export class CandidatesModule { }

@@ -1,20 +1,21 @@
-import { Expose } from 'class-transformer';
-import { IsInt, IsNumber, IsString } from 'class-validator';
+import { Expose, Type } from 'class-transformer';
+import { IsInt, IsString } from 'class-validator';
 
 export class EducationDetailsDto {
   @Expose()
-  @IsNumber()
-  averageGrade!: number;
+  @Type(() => Number)
+  averageGrade?: number;
 
   @Expose()
+  @Type(() => Number)
   @IsInt()
   educationLevelId!: number;
 
   @Expose()
-  @IsString()
-  endDate!: string;
+  endDate?: string;
 
   @Expose()
+  @Type(() => Number)
   @IsInt()
   fieldOfStudyId!: number;
 
@@ -28,14 +29,15 @@ export class EducationDetailsDto {
   otherUniversity!: string; // unused, but sent
 
   @Expose()
-  @IsInt()
-  specializationId!: number;
+  @Type(() => Number)
+  specializationId?: number;
 
   @Expose()
   @IsString()
   startDate!: string;
 
   @Expose()
+  @Type(() => Number)
   @IsInt()
   universityId!: number;
 }

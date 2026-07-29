@@ -5,7 +5,7 @@ export class ExtracurricularPosition {
   @Prop({ required: true }) title!: string;
   @Prop({ required: true }) activity!: string;
   @Prop({ required: true }) startDate!: string;
-  @Prop({ required: true }) endDate!: string;
+  @Prop() endDate!: string;
   @Prop() description!: string;
 }
 

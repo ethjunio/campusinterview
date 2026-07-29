@@ -3,13 +3,10 @@ import { HydratedDocument } from 'mongoose';
 
 import { WithId } from '@/database/types';
 
-export type UserDocument = HydratedDocument<User>;
-
-export type PublicUser = Omit<WithId<User>, 'passwordHash'>;
-
 export enum UserType {
   Candidate = 'candidate',
   Company = 'company',
+  Admin = 'admin',
 }
 
 @Schema()
@@ -34,3 +31,7 @@ export class User {
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
+
+export type UserDocument = HydratedDocument<User>;
+
+export type PublicUser = Omit<WithId<User>, 'passwordHash'>;
