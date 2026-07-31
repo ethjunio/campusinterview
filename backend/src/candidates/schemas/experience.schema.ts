@@ -10,4 +10,5 @@ export class ExperiencePosition {
   @Prop() description?: string;
 }
 
-export const ExperiencePositionSchema = SchemaFactory.createForClass(ExperiencePosition);
+export const ExperiencePositionSchema =
+  SchemaFactory.createForClass(ExperiencePosition);

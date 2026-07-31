@@ -1,4 +1,14 @@
-import { Body, Controller, Get, Post, Put, Req, UploadedFile, UseInterceptors, Version } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  Put,
+  Req,
+  UploadedFile,
+  UseInterceptors,
+  Version,
+} from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 
 import { CandidatesService } from './candidates.service';
@@ -12,16 +22,14 @@ import { SkillPositionDto } from './dtos/skill.dto';
 
 @Controller()
 export class CandidatesController {
-  public constructor(
-    private candidatesService: CandidatesService,
-  ) { }
+  public constructor(private candidatesService: CandidatesService) {}
 
   @Version('1')
   @Get('student/onboardingMgmt/getPersonalDetails')
   public async getPersonalData(@Req() req: any) {
     const email = req.user.email;
     const personal = await this.candidatesService.getPersonalData(email);
-    return { status: true, message: 'OK', data: personal }
+    return { status: true, message: 'OK', data: personal };
   }
 
   @Version('1')
@@ -30,7 +38,7 @@ export class CandidatesController {
   public async setPersonalData(
     @Req() req: any,
     @Body() personal: PersonalDataDto,
-    @UploadedFile() image: Express.Multer.File,
+    @UploadedFile() _image: Express.Multer.File,
   ) {
     const email = req.user.email;
     await this.candidatesService.setPersonalData(email, personal);
@@ -41,12 +49,15 @@ export class CandidatesController {
   public async getEducation(@Req() req: any) {
     const email = req.user.email;
     const personal = await this.candidatesService.getEducation(email);
-    return { status: true, message: 'OK', data: personal }
+    return { status: true, message: 'OK', data: personal };
   }
 
   @Version('1')
   @Post('student/onboardingMgmt/saveEducationDetails')
-  public async setEducation(@Req() req: any, @Body() education: EducationDetailsDto) {
+  public async setEducation(
+    @Req() req: any,
+    @Body() education: EducationDetailsDto,
+  ) {
     const email = req.user.email;
     await this.candidatesService.setEducation(email, education);
   }
@@ -56,12 +67,15 @@ export class CandidatesController {
   public async getExperiences(@Req() req: any) {
     const email = req.user.email;
     const positions = await this.candidatesService.getExperiences(email);
-    return { status: true, message: 'OK', data: positions }
+    return { status: true, message: 'OK', data: positions };
   }
 
   @Version('1')
   @Post('student/profileMgmt/addCandidateExperience')
-  public async addExperience(@Req() req: any, @Body() position: ExperiencePositionDto) {
+  public async addExperience(
+    @Req() req: any,
+    @Body() position: ExperiencePositionDto,
+  ) {
     const email = req.user.email;
     await this.candidatesService.addExperience(email, position);
   }
@@ -70,7 +84,8 @@ export class CandidatesController {
   @Get('student/profileMgmt/getCandidateExtracuriculars/extracurricular')
   public async getExtracuriculars(@Req() req: any) {
     const email = req.user.email;
-    const extracurriculars = await this.candidatesService.getExtracurriculars(email);
+    const extracurriculars =
+      await this.candidatesService.getExtracurriculars(email);
     return { status: true, message: 'OK', data: extracurriculars };
   }
 
@@ -109,15 +124,19 @@ export class CandidatesController {
 
   @Version('1')
   @Post('student/profileMgmt/saveCandidateLanguage/language')
-  public async setLanguages(@Req() req: any, @Body() languages: LanguagePositionDto[]) {
+  public async setLanguages(
+    @Req() req: any,
+    @Body() languages: LanguagePositionDto[],
+  ) {
     const email = req.user.email;
     await this.candidatesService.setLanguages(email, languages);
   }
 
   @Version('1')
   @Get('student/onboardingMgmt/getCandidateJobRequirements')
-  public async getJobRequirements(@Req() req: any) {
-    const email = req.user.email;
+  public getJobRequirements(@Req() req: any) {
+    const _email = req.user.email;
+    // TODO
     return { status: true, message: 'OK', data: null };
   }
 
@@ -125,7 +144,7 @@ export class CandidatesController {
   @Post('student/onboardingMgmt/saveJobRequirementDetails')
   public async setJobRequirements(
     @Req() req: any,
-    @Body() requirements: JobRequirementsDto
+    @Body() requirements: JobRequirementsDto,
   ) {
     const email = req.user.email;
     await this.candidatesService.setJobRequirements(email, requirements);

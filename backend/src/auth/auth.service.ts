@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectModel } from '@nestjs/mongoose';
 import * as bcrypt from 'bcrypt';
@@ -6,6 +10,7 @@ import { randomBytes } from 'crypto';
 import { Model } from 'mongoose';
 
 import { CandidatesService } from '@/candidates/candidates.service';
+import { CompaniesService } from '@/companies/companies.service';
 import { PublicUser, User, UserType } from '@/users/schemas/user.schema';
 import { UsersService } from '@/users/users.service';
 import { SignInResponseDto } from './dtos/sign-in.dto';
@@ -25,31 +30,30 @@ export class AuthService {
     private jwtService: JwtService,
     private userService: UsersService,
     private candidateService: CandidatesService,
-  ) { }
+    private companiesService: CompaniesService,
+  ) {}
 
-  public async validateUser(email: string, password: string): Promise<PublicUser> {
+  public async validateUser(
+    email: string,
+    password: string,
+  ): Promise<PublicUser> {
     const user = await this.userModel.findOne({ email });
     if (!user) {
-      throw new UnauthorizedException(
-        AuthError[AuthError.INVALID_CREDENTIALS]
-      );
+      throw new UnauthorizedException(AuthError[AuthError.INVALID_CREDENTIALS]);
     }
 
     if (!user.emailVerified) {
-      throw new UnauthorizedException(
-        AuthError[AuthError.EMAIL_NOT_VERIFIED]
-      );
+      throw new UnauthorizedException(AuthError[AuthError.EMAIL_NOT_VERIFIED]);
     }
 
     const isPasswordValid = await bcrypt.compare(password, user.passwordHash);
     if (isPasswordValid) {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { passwordHash, ...result } = user.toObject();
       return result;
     }
 
-    throw new UnauthorizedException(
-      AuthError[AuthError.INVALID_CREDENTIALS]
-    );
+    throw new UnauthorizedException(AuthError[AuthError.INVALID_CREDENTIALS]);
   }
 
   public async signIn(publicUser: PublicUser): Promise<SignInResponseDto> {
@@ -59,15 +63,22 @@ export class AuthService {
 
     let candidateOnboardingState: string | undefined = undefined;
     if (user.type === UserType.Candidate)
-      candidateOnboardingState = await this.candidateService.updateOnboardingState(email);
+      candidateOnboardingState =
+        await this.candidateService.updateOnboardingState(email);
+
+    let companyOnboardingState: string | undefined = undefined;
+    if (user.type === UserType.Company)
+      companyOnboardingState =
+        await this.companiesService.getOnboardingState(email);
 
     return {
       user: {
         email,
         type: user.type,
         candidateOnboardingState,
+        companyOnboardingState,
       },
-      accessToken
+      accessToken,
     };
   }
 
@@ -75,15 +86,13 @@ export class AuthService {
     const existingUser = await this.userModel.findOne({ email });
     if (existingUser) {
       throw new BadRequestException(
-        AuthError[AuthError.USER_REGISTRATION_FAILED]
-      )
+        AuthError[AuthError.USER_REGISTRATION_FAILED],
+      );
     }
 
     const passwordHash = await bcrypt.hash(password, 10);
     const emailVerificationToken = randomBytes(32).toString('hex');
-    const emailVerificationExpires = new Date(
-      Date.now() + 1000 * 60 * 60 * 24,
-    );
+    const emailVerificationExpires = new Date(Date.now() + 1000 * 60 * 60 * 24);
 
     const user = await this.userModel.create({
       email,
@@ -96,7 +105,7 @@ export class AuthService {
 
     if (!user) {
       throw new BadRequestException(
-        AuthError[AuthError.USER_REGISTRATION_FAILED]
+        AuthError[AuthError.USER_REGISTRATION_FAILED],
       );
     }
   }
@@ -122,7 +131,7 @@ export class AuthService {
     await user.save();
   }
 
-  public async resetPassword(email: string) {
-    throw new BadRequestException("NOT_IMPLEMENTED");
+  public resetPassword(_email: string) {
+    throw new BadRequestException('NOT_IMPLEMENTED');
   }
 }

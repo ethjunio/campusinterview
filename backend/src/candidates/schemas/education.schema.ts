@@ -14,4 +14,5 @@ export class EducationDetails {
   @Prop() universityId?: number;
 }
 
-export const EducationDetailsSchema = SchemaFactory.createForClass(EducationDetails);
+export const EducationDetailsSchema =
+  SchemaFactory.createForClass(EducationDetails);

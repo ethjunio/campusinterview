@@ -9,4 +9,6 @@ export class ExtracurricularPosition {
   @Prop() description!: string;
 }
 
-export const ExtracurricularPositionSchema = SchemaFactory.createForClass(ExtracurricularPosition);
+export const ExtracurricularPositionSchema = SchemaFactory.createForClass(
+  ExtracurricularPosition,
+);

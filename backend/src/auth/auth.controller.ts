@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Request, UseGuards } from '@nestjs/common';
+import { Body, Controller, Post, Request, UseGuards } from '@nestjs/common';
 import { ApiOkResponse } from '@nestjs/swagger';
 
 import { AuthService } from './auth.service';
@@ -9,25 +9,23 @@ import { LocalAuthGuard } from './guards/local-auth.guard';
 
 @Controller('auth')
 export class AuthController {
-  public constructor(private authService: AuthService) { }
+  public constructor(private authService: AuthService) {}
 
   @ApiOkResponse({ type: SignInResponseDto })
   @Public()
   @UseGuards(LocalAuthGuard)
-  @Post(['signin', 'login'])
+  @Post('login')
   public async signIn(@Request() req: any, @Body() _body: SignInRequestDto) {
     const data = await this.authService.signIn(req.user);
     return { data };
   }
 
   @Public()
-  @Post(['signup', 'register'])
+  @Post('register')
   public async signUp(@Body() body: SignUpRequestDto) {
     await this.authService.signUp(body.email, body.password, body.type);
   }
 
-  @Get('profile')
-  public getProfile(@Request() req: any) {
-    return req.user;
-  }
+  // @Get('profile')
+  // public getProfile(@Request() req: any) { return req.user; }
 }

@@ -17,5 +17,9 @@ export class UserResponseDto {
 
   @ApiProperty()
   @Expose()
-  candidateOnboardingState?: string
+  candidateOnboardingState?: string;
+
+  @ApiProperty()
+  @Expose()
+  companyOnboardingState?: string;
 }

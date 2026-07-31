@@ -7,4 +7,5 @@ export class LanguagePosition {
   @Prop() qualification!: string;
 }
 
-export const LanguagePositionSchema = SchemaFactory.createForClass(LanguagePosition);
+export const LanguagePositionSchema =
+  SchemaFactory.createForClass(LanguagePosition);

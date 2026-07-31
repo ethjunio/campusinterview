@@ -3,8 +3,14 @@ import { HydratedDocument, Types } from 'mongoose';
 
 import { User } from '@/users/schemas/user.schema';
 import { EducationDetails, EducationDetailsSchema } from './education.schema';
-import { ExperiencePosition, ExperiencePositionSchema } from './experience.schema';
-import { ExtracurricularPosition, ExtracurricularPositionSchema } from './extracurricular.schema';
+import {
+  ExperiencePosition,
+  ExperiencePositionSchema,
+} from './experience.schema';
+import {
+  ExtracurricularPosition,
+  ExtracurricularPositionSchema,
+} from './extracurricular.schema';
 import { JobRequirements, JobRequirementsSchema } from './job.schema';
 import { LanguagePosition, LanguagePositionSchema } from './language.schema';
 import { PersonalData, PersonalDataSchema } from './personal.schema';
@@ -32,7 +38,8 @@ export class Candidate {
   @Prop([ExperiencePositionSchema]) experiences?: ExperiencePosition[];
 
   // Extracurriculars
-  @Prop([ExtracurricularPositionSchema]) extracurriculars?: ExtracurricularPosition[];
+  @Prop([ExtracurricularPositionSchema])
+  extracurriculars?: ExtracurricularPosition[];
 
   // Skills
   @Prop([SkillPositionSchema]) skills?: SkillPosition[];

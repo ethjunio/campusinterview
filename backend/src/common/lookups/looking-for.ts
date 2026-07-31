@@ -8,10 +8,7 @@ export const desiredWorkAreaOptions = [
   { label: 'On Site' },
 ];
 
-export const desiredTravelActivityOptions = [
-  { label: 'No' },
-  { label: 'Yes' },
-];
+export const desiredTravelActivityOptions = [{ label: 'No' }, { label: 'Yes' }];
 
 export const areasOfInterestOptions = [
   { label: 'Production' },

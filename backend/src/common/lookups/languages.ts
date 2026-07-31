@@ -6,8 +6,8 @@ export const languageOptions = [
 ];
 
 export const languageLevelsOptions = [
-  { label: "Beginner" },
-  { label: "Intermediate" },
-  { label: "Advanced" },
-  { label: "Expert" },
+  { label: 'Beginner' },
+  { label: 'Intermediate' },
+  { label: 'Advanced' },
+  { label: 'Expert' },
 ];

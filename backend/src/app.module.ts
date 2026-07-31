@@ -5,10 +5,10 @@ import { MongooseModule } from '@nestjs/mongoose';
 
 import { AuthModule } from './auth/auth.module';
 import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
-import { ContentModule } from './content/content.module';
-import { UsersModule } from './users/users.module';
 import { CandidatesModule } from './candidates/candidates.module';
 import { CompaniesModule } from './companies/companies.module';
+import { ContentModule } from './content/content.module';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
@@ -34,4 +34,4 @@ import { CompaniesModule } from './companies/companies.module';
     },
   ],
 })
-export class AppModule { }
+export class AppModule {}

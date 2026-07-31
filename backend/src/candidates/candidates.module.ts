@@ -8,11 +8,13 @@ import { Candidate, CandidateSchema } from './schemas/candidate.schema';
 
 @Module({
   imports: [
-    MongooseModule.forFeature([{ name: Candidate.name, schema: CandidateSchema }]),
+    MongooseModule.forFeature([
+      { name: Candidate.name, schema: CandidateSchema },
+    ]),
     UsersModule,
   ],
   controllers: [CandidatesController],
   providers: [CandidatesService],
   exports: [CandidatesService],
 })
-export class CandidatesModule { }
+export class CandidatesModule {}

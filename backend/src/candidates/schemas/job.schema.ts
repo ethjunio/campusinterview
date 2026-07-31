@@ -11,4 +11,5 @@ export class JobRequirements {
   @Prop() interestIds?: string;
 }
 
-export const JobRequirementsSchema = SchemaFactory.createForClass(JobRequirements);
+export const JobRequirementsSchema =
+  SchemaFactory.createForClass(JobRequirements);
