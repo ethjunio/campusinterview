@@ -17,7 +17,7 @@ const page = async () => {
   // });
   const [impressions, faqsData, talentListData] = await Promise.all([
     fetchData({ url: "visitor/getEventImpressionImages" }),
-    fetchData({ url: "common/getAllFAQ?type=company" }),
+    fetchData({ url: "admin/faqMgmt/getAllFAQ?type=company" }),
     fetchData({ url: "visitor/getlandingPageData" })
   ]);
 

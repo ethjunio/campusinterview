@@ -3,6 +3,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { APP_GUARD } from '@nestjs/core';
 import { MongooseModule } from '@nestjs/mongoose';
 
+import { AdminModule } from './admin/admin.module';
 import { AuthModule } from './auth/auth.module';
 import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
 import { CandidatesModule } from './candidates/candidates.module';
@@ -28,6 +29,7 @@ import { UsersModule } from './users/users.module';
     ContentModule,
     CandidatesModule,
     CompaniesModule,
+    AdminModule,
   ],
   providers: [
     {
