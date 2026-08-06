@@ -149,7 +149,7 @@ const Messages: React.FC<MessagesProps> = ({ newMessage, selectedCompany ,  pend
                 from={message.sentBy}
                 photo={
                   message.sentBy === "candidate"
-                    ? personalData?.data?.imageUrlSmall
+                    ? personalData?.data?.imageUrl
                     : selectedCompany?.company?.imageUrlSmall
                 }
                 attachment={message?.files}

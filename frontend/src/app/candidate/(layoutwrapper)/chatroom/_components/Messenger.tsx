@@ -147,7 +147,7 @@ const Messenger: React.FC = () => {
             {!isFetching && (
               <div className="pl-3 pr-3 lg:pl-5 lg:pr-5 ">
                 <NewMessages
-                  photo={personalData?.data?.imageUrlSmall}
+                  photo={personalData?.data?.imageUrl}
                   selectedId={selectedCompany?.company?.id}
                   canChat={getCanChat()}
                   pending={pending}

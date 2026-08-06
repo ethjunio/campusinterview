@@ -173,7 +173,7 @@ export const PersonalForm = (button: any) => {
   }, [hasChanges]);
   const originalValues = React.useMemo(() => {
     return {
-      image: personalData?.data?.imageUrlSmall || "",
+      image: personalData?.data?.imageUrl || "",
       salutation: personalData?.data?.salutation
         ? {
           label: personalData.data.salutation,

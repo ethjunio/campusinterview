@@ -11,7 +11,7 @@ export class PersonalDataDto {
   @Expose()
   @IsOptional()
   @IsString()
-  imageUrlSmall?: string;
+  imageUrl?: string;
 
   @Expose()
   @IsString()

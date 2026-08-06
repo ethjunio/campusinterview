@@ -57,10 +57,10 @@ export const PersonalCard: FC<{
       <div className="flex w-full items-start justify-between pt-12 mt-8 lg:mt-0 pt-8 pb-8">
         <div className="lg:flex flex-grow">
           <div className="w-full lg:w-8/12">
-            {personalData?.data?.imageUrlMedium ? (
+            {personalData?.data?.imageUrl ? (
               <img
                 className="absolute -mt-12 lg:-mt-8 w-32 lg:w-40 h-32 lg:h-40 rounded-full"
-                src={personalData?.data?.imageUrlMedium}
+                src={personalData?.data?.imageUrl}
               />
             ) : (
               <PlaceholderImage className="absolute -mt-12 lg:-mt-8 w-32 lg:w-40 h-32 lg:h-40 rounded-full" />

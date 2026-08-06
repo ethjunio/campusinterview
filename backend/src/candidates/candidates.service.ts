@@ -58,7 +58,7 @@ export class CandidatesService {
     )!;
 
     if (candidate.personal?.imageKey) {
-      personal.imageUrlSmall = await this.storageService.getPresignedUrl(
+      personal.imageUrl = await this.storageService.getPresignedUrl(
         StorageBucket.Candidates,
         candidate.personal.imageKey,
       );
