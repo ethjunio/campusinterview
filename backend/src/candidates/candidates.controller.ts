@@ -38,10 +38,10 @@ export class CandidatesController {
   public async setPersonalData(
     @Req() req: any,
     @Body() personal: PersonalDataDto,
-    @UploadedFile() _image: Express.Multer.File,
+    @UploadedFile() image?: Express.Multer.File,
   ) {
     const email = req.user.email;
-    await this.candidatesService.setPersonalData(email, personal);
+    await this.candidatesService.setPersonalData(email, personal, image);
   }
 
   @Version('1')

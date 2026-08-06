@@ -13,6 +13,7 @@ export class PersonalData {
   @Prop() nationality?: string;
   @Prop() residencePermit?: string;
   @Prop() experienceYears?: number;
+  @Prop() imageKey?: string;
 }
 
 export const PersonalDataSchema = SchemaFactory.createForClass(PersonalData);

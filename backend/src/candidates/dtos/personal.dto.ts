@@ -1,7 +1,18 @@
 import { Expose, Type } from 'class-transformer';
-import { IsInt, IsString, MaxLength, MinLength } from 'class-validator';
+import {
+  IsInt,
+  IsOptional,
+  IsString,
+  MaxLength,
+  MinLength,
+} from 'class-validator';
 
 export class PersonalDataDto {
+  @Expose()
+  @IsOptional()
+  @IsString()
+  imageUrlSmall?: string;
+
   @Expose()
   @IsString()
   salutation!: string;

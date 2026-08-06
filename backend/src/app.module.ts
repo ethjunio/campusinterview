@@ -8,6 +8,7 @@ import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
 import { CandidatesModule } from './candidates/candidates.module';
 import { CompaniesModule } from './companies/companies.module';
 import { ContentModule } from './content/content.module';
+import { StorageModule } from './storage/storage.module';
 import { UsersModule } from './users/users.module';
 
 @Module({
@@ -21,6 +22,7 @@ import { UsersModule } from './users/users.module';
         uri: config.getOrThrow<string>('DATABASE_URL'),
       }),
     }),
+    StorageModule,
     AuthModule,
     UsersModule,
     ContentModule,

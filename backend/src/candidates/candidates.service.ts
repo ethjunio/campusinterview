@@ -13,6 +13,8 @@ import {
   getPermitByIndex,
 } from '@/common/lookups/residence-permits';
 import { skillLevelsOptions, skillOptions } from '@/common/lookups/skills';
+import { StorageBucket } from '@/storage/storage.buckets';
+import { StorageService } from '@/storage/storage.service';
 import { UserType } from '@/users/schemas/user.schema';
 import { UsersService } from '@/users/users.service';
 import { EducationDetailsDto } from './dtos/education.dto';
@@ -29,6 +31,7 @@ export class CandidatesService {
   public constructor(
     @InjectModel(Candidate.name) private candidateModel: Model<Candidate>,
     private usersService: UsersService,
+    private storageService: StorageService,
   ) {}
 
   private async getCandidate(email: string): Promise<CandidateDocument> {
@@ -54,10 +57,21 @@ export class CandidatesService {
       candidate.personal?.residencePermit,
     )!;
 
+    if (candidate.personal?.imageKey) {
+      personal.imageUrlSmall = await this.storageService.getPresignedUrl(
+        StorageBucket.Candidates,
+        candidate.personal.imageKey,
+      );
+    }
+
     return personal;
   }
 
-  public async setPersonalData(email: string, personal: PersonalDataDto) {
+  public async setPersonalData(
+    email: string,
+    personal: PersonalDataDto,
+    image?: Express.Multer.File,
+  ) {
     const candidate = await this.getCandidate(email);
     if (!candidate.personal) candidate.personal = {};
 
@@ -76,6 +90,17 @@ export class CandidatesService {
       personal.residencePermitId,
     )?.value;
     candidate.personal.experienceYears = personal.experienceYears;
+
+    if (image) {
+      const key = `${candidate._id.toString()}/profile-image`;
+      await this.storageService.putObject(
+        StorageBucket.Candidates,
+        key,
+        image.buffer,
+        image.mimetype,
+      );
+      candidate.personal.imageKey = key;
+    }
 
     await candidate.save();
     await this.updateOnboardingState(email);
