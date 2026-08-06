@@ -3,7 +3,7 @@ import useAuthStore from "@/app/store/authStore";
 
 export function useAuthHydration() {
   const [hydrated, setHydrated] = useState(() =>
-    useAuthStore.persist.hasHydrated()
+    useAuthStore.persist?.hasHydrated() ?? false
   );
 
   useEffect(() => {

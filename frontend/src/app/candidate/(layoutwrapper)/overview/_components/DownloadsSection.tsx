@@ -1,12 +1,10 @@
 "use client";
 import { Download, FileText } from "lucide-react";
 
-const buildUrl = (url: string) => `${url}?v=${Date.now()}`;
-
 const privacyPolicy = {
   name: "Privacy policy",
   size: "44 KB",
-  to: buildUrl("https://cdn.campusinterview.ch/production/test/legal-docs/privacy-policy.pdf"),
+  to: "https://cdn.campusinterview.ch/production/test/legal-docs/privacy-policy.pdf",
 };
 
 const DownloadsSection = () => {
