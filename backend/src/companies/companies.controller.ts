@@ -34,10 +34,10 @@ export class CompaniesController {
   public async setGeneralData(
     @Req() req: any,
     @Body() general: CompanyGeneralDataDto,
-    @UploadedFile() _image: Express.Multer.File,
+    @UploadedFile() image?: Express.Multer.File,
   ) {
     const email = req.user.email;
-    await this.companiesService.setGeneralData(email, general);
+    await this.companiesService.setGeneralData(email, general, image);
   }
 
   @Version('1')

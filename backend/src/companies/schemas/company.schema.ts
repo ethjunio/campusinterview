@@ -40,6 +40,7 @@ export class Company {
   @Prop() description?: string;
   @Prop() website?: string;
   @Prop() industries?: number[];
+  @Prop() imageKey?: string;
 
   // Facts and figures
   @Prop() corporateActivity?: string;

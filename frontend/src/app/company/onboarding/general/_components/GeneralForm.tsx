@@ -87,7 +87,7 @@ export const GeneralForm = ({ button }: { button?: any }) => {
     );
 
     return {
-      image: companyData.imageUrlLarge || "",
+      image: companyData.imageUrl || "",
       name: companyData.name || "",
       description: companyData.description || "",
       industries: mappedIndustries,

@@ -4,6 +4,7 @@ import { ContactPersonDto } from './contact.dto';
 import { CompanyRepresentantDto } from './representants.dto';
 
 export class CompanyDto {
+  @Expose() imageUrl?: string;
   @Expose() name?: string;
   @Expose() description?: string;
   @Expose() website?: string;

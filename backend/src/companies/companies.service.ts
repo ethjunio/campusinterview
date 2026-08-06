@@ -1,3 +1,5 @@
+import { StorageBucket } from '@/storage/storage.buckets';
+import { StorageService } from '@/storage/storage.service';
 import { UserType } from '@/users/schemas/user.schema';
 import { UsersService } from '@/users/users.service';
 import { BadRequestException, Injectable } from '@nestjs/common';
@@ -21,6 +23,7 @@ export class CompaniesService {
   public constructor(
     @InjectModel(Company.name) private companyModel: Model<Company>,
     private usersService: UsersService,
+    private storageService: StorageService,
   ) {}
 
   private async getCompanyInternal(email: string): Promise<CompanyDocument> {
@@ -45,16 +48,38 @@ export class CompaniesService {
       }),
     );
 
+    if (company.imageKey) {
+      dto.imageUrl = await this.storageService.getPresignedUrl(
+        StorageBucket.Companies,
+        company.imageKey,
+      );
+    }
+
     return dto;
   }
 
-  public async setGeneralData(email: string, general: CompanyGeneralDataDto) {
+  public async setGeneralData(
+    email: string,
+    general: CompanyGeneralDataDto,
+    image?: Express.Multer.File,
+  ) {
     const company = await this.getCompanyInternal(email);
 
     company.name = general.name;
     company.description = general.description;
     company.website = general.website;
     company.industries = general.industries;
+
+    if (image) {
+      const key = `${company._id.toString()}/logo`;
+      await this.storageService.putObject(
+        StorageBucket.Companies,
+        key,
+        image.buffer,
+        image.mimetype,
+      );
+      company.imageKey = key;
+    }
 
     await company.save();
   }

@@ -3,7 +3,7 @@ import { getCompanyGeneralDataApi } from "@/app/services/company/onboarding/getC
 
 export const useGetCompanyGeneralDataQuery = (options: any = {}) => {
   return useQuery<{
-    imageUrlLarge: string;
+    imageUrl: string;
     offeredPositionTypes: any;
     ContactLanguage: any;
     mainLanguageId: string;
@@ -26,7 +26,6 @@ export const useGetCompanyGeneralDataQuery = (options: any = {}) => {
     swissEmployeeCount: number;
     worldEmployeeCount: number;
     shareOfGraduates: number;
-    imageUrlSmall: string;
     data: any;
   }>({
     queryKey: ["getCompanyGeneralData"],

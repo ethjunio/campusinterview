@@ -112,10 +112,10 @@ export const GeneralCard: FC<{
             style={{ minHeight: "268px" }}
           >
             <div className="lg:flex flex-grow lg:flex-col h-20 lg:h-auto mb-14">
-              {data?.imageUrlMedium ? (
+              {data?.imageUrl ? (
                 <img
                   className="absolute -mt-12 lg:-mt-8 w-32 lg:w-40 h-32 lg:h-40 rounded-full"
-                  src={data?.imageUrlMedium}
+                  src={data?.imageUrl}
                 />
               ) : (
                 <PlaceholderImage className="absolute -mt-12 lg:-mt-8 w-32 lg:w-40 h-32 lg:h-40 rounded-full" />
