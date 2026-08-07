@@ -29,7 +29,36 @@ services:
     volumes:
       - rustfs_data:/data
     user: "10001:10001"
+    
+  # for developing reason the old postgresql database and viewer
+  postgres:
+    image: postgres:16
+    container_name: campusinterview-postgres
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: campusinterview
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: campusinterview-pgadmin
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+
 
 volumes:
   mongodb_data:
   rustfs_data:
+  postgres_data:
+  pgadmin_data:
